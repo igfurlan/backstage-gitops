@@ -6,4 +6,4 @@ patches:
   - path: patches/resources.yaml
 images:
   - name: ghcr.io/igfurlan/backstage
-    newTag: sha-2e3e336
+    newTag: sha-b1c1a25
