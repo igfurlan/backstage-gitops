@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: backstage-canary-check
+  namespace: backstage
+spec:
+  metrics:
+    - name: error-rate
+      interval: 30s
+      successCondition: isNaN(result) || result <= 0.25
+      failureLimit: 3
+      provider:
+        prometheus:
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            sum(rate(traefik_service_requests_total{exported_service=~"backstage-backstage-.*",code=~"5.."}[2m]))
+            /
+            sum(rate(traefik_service_requests_total{exported_service=~"backstage-backstage-.*"}[2m]))
+    - name: request-duration
+      interval: 30s
+      successCondition: isNaN(result) || result <= 5
+      failureLimit: 3
+      provider:
+        prometheus:
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            histogram_quantile(0.95,
+              sum(rate(traefik_service_request_duration_seconds_bucket{exported_service=~"backstage-backstage-.*"}[2m])) by (le)
+            )
+    - name: pod-restarts
+      interval: 30s
+      successCondition: isNaN(result) || result < 2
+      failureLimit: 2
+      provider:
+        prometheus:
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            sum(increase(kube_pod_container_status_restarts_total{namespace="backstage",container="backstage"}[2m]))
