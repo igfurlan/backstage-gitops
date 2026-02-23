@@ -4,6 +4,6 @@ namespace: backstage
 resources:
   - namespace.yaml
   - sealed-secret.yaml
-  - deployment.yaml
+  - rollout.yaml
   - service.yaml
   - httproute.yaml

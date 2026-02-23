@@ -2,8 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+configurations:
+  - kustomize-config.yaml
 patches:
   - path: patches/resources.yaml
 images:
   - name: ghcr.io/igfurlan/backstage
-    newTag: sha-754fb7a
+    newTag: sha-b1c1a25
