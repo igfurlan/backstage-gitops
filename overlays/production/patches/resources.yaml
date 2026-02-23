@@ -1,3 +1,3 @@
 - op: replace
   path: /spec/template/spec/containers/0/image
-  value: ghcr.io/igfurlan/backstage:sha-87e0373
+  value: ghcr.io/igfurlan/backstage:sha-9b97577
