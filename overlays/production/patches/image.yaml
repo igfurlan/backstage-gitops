@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: backstage
-          image: ghcr.io/igfurlan/backstage:sha-b1c1a25
+          image: ghcr.io/igfurlan/backstage:sha-87e0373
