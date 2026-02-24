@@ -6,6 +6,8 @@ metadata:
 spec:
   replicas: 1
   revisionHistoryLimit: 3
+  progressDeadlineSeconds: 120
+  progressDeadlineAbort: true
   selector:
     matchLabels:
       app: backstage
@@ -43,8 +45,6 @@ spec:
               memory: 1Gi
   strategy:
     canary:
-      progressDeadlineAbort: true
-      progressDeadlineSeconds: 120
       analysis:
         templates:
           - templateName: backstage-canary-check
