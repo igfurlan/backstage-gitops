@@ -43,6 +43,8 @@ spec:
               memory: 1Gi
   strategy:
     canary:
+      progressDeadlineAbort: true
+      progressDeadlineSeconds: 120
       analysis:
         templates:
           - templateName: backstage-canary-check
